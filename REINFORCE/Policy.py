@@ -19,7 +19,7 @@ class Policy(nn.Module):
     def forward(self, x):
         x = F.relu(self.fc1(x))
         x = F.softmax(self.fc2(x), dim=0)
-        return 0
+        return x
 
     def put_data(self, item):
         self.data.append(item)

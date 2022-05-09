@@ -14,16 +14,15 @@ def main():
         done = False
 
         while not done:
-            print(torch.from_numpy(s).float())
-            # prob = pi(torch.from_numpy(s).float())
-            # # 아마도 확률을 관측값에 따라 변동시켜주는 것, 다시말해 정책 π_θ에 해당하는 것 같다.
-            # m = Categorical(prob) # 행동의 경우의 수가 적은경우 categorical을 쓴다고함
-            # # 샘플이 쌓일때마다 확률이 높은 액션은 자주, 낮은 액션은 덜 뽑히게 됨,
-            # a = m.sample()
-            # s_prime, r, done, info = env.step(a.item())
-            # pi.put_data((r, prob[a]))
-            # s = s_prime
-            # score += r
+            prob = pi(torch.from_numpy(s) .float())
+            # 아마도 확률을 관측값에 따라 변동시켜주는 것, 다시말해 정책 π_θ에 해당하는 것 같다.
+            m = Categorical(prob) # 행동의 경우의 수가 적은경우 categorical을 쓴다고함
+            # 샘플이 쌓일때마다 확률이 높은 액션은 자주, 낮은 액션은 덜 뽑히게 됨,
+            a = m.sample()
+            s_prime, r, done, info = env.step(a.item())
+            pi.put_data((r, prob[a]))
+            s = s_prime
+            score += r
 
         pi.train_net()
 
